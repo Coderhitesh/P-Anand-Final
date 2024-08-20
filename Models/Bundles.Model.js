@@ -5,19 +5,37 @@ const BundleSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    bundlePrice:{
+    bundleTotalPrice:{
+        type:Number,
+        required: true
+    },
+    bundleDiscountPrice:{
+        type:Number,
+        required: true
+    },
+    bundleDisCountPercenatgae:{
         type:Number,
         required: true
     },
     bundleImage:{
-        type:String,
-        required: true
+        url:{
+            type:String,
+            required: true
+        },
+        public_id:{
+            type:String,
+            required: true
+        }
     },
-    bundleCourseName: {
-        type: [String],
-        required: true
-    }
-})
+    bundleCourseId:[{
+        id:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Course',
+            required:true
+        },
+        _id:false
+    }]
+},{timestamps:true})
 
 const Bundle = mongoose.model('Bundle',BundleSchema)
 module.exports = Bundle

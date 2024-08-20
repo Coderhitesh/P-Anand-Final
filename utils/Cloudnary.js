@@ -11,7 +11,7 @@ const uploadImage = async (file) => {
         const result = await cloudinary.uploader.upload(file, {
             folder: "artists"
         });
-        return result.secure_url;
+        return { image: result.secure_url, public_id: result.public_id };
     } catch (error) {
         console.error(error);
         throw new Error('Failed to upload video');
@@ -22,7 +22,7 @@ const uploadVideo = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file, {
             folder: "artists",
-            resource_type: "video" 
+            resource_type: "video"
         });
         return result.secure_url;
     } catch (error) {
@@ -31,13 +31,13 @@ const uploadVideo = async (file) => {
     }
 };
 
-const deleteImageFromCloudinary = async (file) => {
+const deleteImageFromCloudinary = async (public_id) => {
     try {
-        await cloudinary.uploader.destroy(file);
-        console.log("Video Deleted");
+        await cloudinary.uploader.destroy(public_id);
+        console.log("Image Deleted");
     } catch (error) {
-        console.error("Error deleting video from Cloudinary", error);
-        throw new Error('Failed to delete video from Cloudinary');
+        console.error("Error deleting Image from Cloudinary", error);
+        throw new Error('Failed to delete Image from Cloudinary');
     }
 };
 

@@ -5,7 +5,14 @@ const CategoryModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    subcategoryName: [{
+        name: {
+            type: String,
+            trim: true
+        }
+    }]
+
 })
 
-const Category = mongoose.model('Category',CategoryModel)
+const Category = mongoose.model('Category', CategoryModel)
 module.exports = Category
