@@ -4,14 +4,39 @@ const fs = require("fs")
 
 exports.createBundle = async (req, res) => {
     try {
-        const { bundleName, bundleTotalPrice, bundleDiscountPrice, bundleDisCountPercenatgae, bundleCourseId } = req.body;
-        const emptyField = [];
+        console.log(req.body)
+        const {
+            bundleName,
+            bundleStartingPrice,
+            bundleEndingPrice,
+            categoryId,
+            bundleCourseId,
+            tag,
+            bundleDescription,
+            bundleMode,
+            feature
+        } = req.body;
 
+        
+
+        // Parse the bundleMode field if it's passed as a string (e.g., from a form)
+        const mode = JSON.parse(bundleMode);
+        const bundleCourseIds = JSON.parse(bundleCourseId)
+        console.log(mode)
+
+
+        const emptyField = [];
+        let formattedBundleCourseId = [];
+
+        // Validation
         if (!bundleName) emptyField.push('Bundle Name');
-        if (!bundleTotalPrice) emptyField.push('Bundle Total Price');
-        if (!bundleDiscountPrice) emptyField.push('Bundle Discount Price');
-        if (!bundleDisCountPercenatgae) emptyField.push('Bundle Discount Percentage');
-        if (!bundleCourseId || bundleCourseId.length === 0) emptyField.push('Bundle Course ID');
+        if (!bundleStartingPrice) emptyField.push('Bundle Starting Price');
+        if (!bundleEndingPrice) emptyField.push('Bundle Ending Price');
+        if (!categoryId) emptyField.push('Category ID');
+        if (!tag) emptyField.push('Tag');
+        if (!bundleDescription) emptyField.push('Bundle Description');
+        if (!mode || mode.length === 0) emptyField.push('Bundle Mode');
+        if (!bundleCourseIds || bundleCourseIds.length === 0) emptyField.push('Bundle Course ID');
 
         if (emptyField.length > 0) {
             return res.status(400).json({
@@ -20,20 +45,35 @@ exports.createBundle = async (req, res) => {
             });
         }
 
+        // Format the bundleCourseId to match schema requirements
+        if (bundleCourseIds) {
+            if (typeof bundleCourseIds === 'string') {
+                formattedBundleCourseId = [{ id: bundleCourseIds }];
+            } else if (Array.isArray(bundleCourseIds)) {
+                formattedBundleCourseId = bundleCourseIds.map(courseId => ({ id: courseId }));
+            } else {
+                return res.status(400).json({ message: "Invalid data type for bundleCourseId" });
+            }
+        }
+
         let newBundle = new Bundle({
             bundleName,
-            bundleTotalPrice,
-            bundleDiscountPrice,
-            bundleDisCountPercenatgae,
-            bundleCourseId
+            bundleStartingPrice,
+            bundleEndingPrice,
+            bundleCourseId: formattedBundleCourseId,
+            bundleMode: mode,
+            categoryId,
+            tag,
+            bundleDescription,
+            feature
         });
 
         // Handle image upload
         if (req.file) {
             const imgUrl = await uploadImage(req.file.path);
             const { image, public_id } = imgUrl;
-            newBundle.bundleImage.url = image;
-            newBundle.bundleImage.public_id = public_id;
+            newBundle.bundleImage = { url: image, public_id };
+
             try {
                 fs.unlinkSync(req.file.path);
             } catch (error) {
@@ -53,14 +93,14 @@ exports.createBundle = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: 'Bundle created successfully',
-                data: newBundle
+                data: newBundleSave
             });
         } else {
             await deleteImageFromCloudinary(newBundleSave.bundleImage.public_id);
             return res.status(400).json({
                 success: false,
                 message: 'Failed to create bundle'
-            })
+            });
         }
     } catch (error) {
         console.log(error);
@@ -70,7 +110,6 @@ exports.createBundle = async (req, res) => {
         });
     }
 };
-
 
 exports.getAllBundles = async (req, res) => {
     try {
@@ -135,6 +174,7 @@ exports.deleteSingleBundle = async (req, res) => {
 
 exports.updateBundle = async (req, res) => {
     try {
+        console.log(req.body)
         const data = await Bundle.findOne({ _id: req.params._id });
         if (!data) {
             return res.status(404).json({

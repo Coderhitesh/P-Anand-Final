@@ -47,6 +47,11 @@ const UserSchema = new mongoose.Schema({
     NewPassword: {
         type: String
     },
+    Role: {
+        type: String,
+        enum: ['Customer', 'Admin'],
+        default: 'Customer'
+    }
 }, { timestamps: true });
 
 UserSchema.pre('save', async function (next) {

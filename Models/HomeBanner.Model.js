@@ -1,9 +1,18 @@
 const mongoose = require('mongoose')
 
 const HomeBannerShema = new mongoose.Schema({
-    HomeBannerImage:{
-        type: String,
-        required: true
+    homeBannerImage:{
+        url:{
+            type:String,
+            required: true
+        },
+        public_id:{
+            type:String,
+            required: true
+        }
+    },
+    active: {
+        type: Boolean,
     }
 })
 

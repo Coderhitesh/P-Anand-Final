@@ -1,31 +1,44 @@
 const mongoose = require('mongoose')
 
+const bundleModeSchema = new mongoose.Schema({
+    modeType: { type: String },
+    coursePrice: { type: Number },
+    coursePriceAfterDiscount: { type: Number },
+    courseDiscountPercent: { type: Number },
+    courseLink:{type:String}
+})
+
 const BundleSchema = new mongoose.Schema({
-    bundleName:{
-        type:String,
+    bundleName: {
+        type: String,
         required: true
     },
-    bundleTotalPrice:{
-        type:Number,
+    bundleStartingPrice: {
+        type: Number,
         required: true
     },
-    bundleDiscountPrice:{
-        type:Number,
+    bundleEndingPrice: {
+        type: Number,
         required: true
     },
-    bundleDisCountPercenatgae:{
-        type:Number,
-        required: true
+    categoryId: {
+        type: String
     },
-    bundleImage:{
-        url:{
-            type:String,
+    bundleImage: {
+        url: {
+            type: String,
             required: true
         },
-        public_id:{
-            type:String,
+        public_id: {
+            type: String,
             required: true
         }
+    }, 
+    tag: {
+        type: String
+    },
+    bundleDescription: {
+        type: String
     },
     bundleCourseId:[{
         id:{
@@ -34,8 +47,12 @@ const BundleSchema = new mongoose.Schema({
             required:true
         },
         _id:false
-    }]
-},{timestamps:true})
+    }],
+    bundleMode: [bundleModeSchema],
+    feature: {
+        type: Boolean
+    }
+}, { timestamps: true })
 
-const Bundle = mongoose.model('Bundle',BundleSchema)
+const Bundle = mongoose.model('Bundle', BundleSchema)
 module.exports = Bundle

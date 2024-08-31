@@ -4,22 +4,32 @@ const fs = require("fs")
 
 exports.createBanner = async (req, res) => {
     try {
-        let newBanner = new mainBanner({});
+        const {active} = req.body
+        if(!active){
+            return res.status(400).json({
+                success: false,
+                message: 'Please Provide the active'
+            })
+        }
+        let newBanner = new mainBanner({
+            active
+        });
 
         if (req.file) {
             const imgUrl = await uploadImage(req.file.path);
-            newBanner.bannerImage = imgUrl;
-
+            const { image, public_id } = imgUrl;
+            newBanner.bannerImage.url = image;
+            newBanner.bannerImage.public_id = public_id;
             try {
                 fs.unlinkSync(req.file.path);
             } catch (error) {
-                console.error("Error deleting local image file:", error);
+                console.log('Error deleting file from local storage', error)
             }
         } else {
             return res.status(400).json({
                 success: false,
-                message: "Please select an image to upload"
-            });
+                message: 'Please upload a course image',
+            })
         }
 
         await newBanner.save();
@@ -100,21 +110,25 @@ exports.updateBanner = async (req, res) => {
         }
 
         // Update fields if provided
-        if (req.body.bannerName) {
-            banner.bannerName = req.body.bannerName;
+        if (req.body.active) {
+            banner.active = req.body.active;
         }
 
-        // Handle image update if a new image is uploaded
+
         if (req.file) {
-            const oldImage = banner.bannerImage.split("/").pop().split(".")[0];
-            try {
-                await deleteImageFromCloudinary(oldImage);
-            } catch (error) {
-                console.error("Error deleting old image from Cloudinary:", error);
+            const oldImagePublicId = banner.bannerImage.public_id;
+            if (oldImagePublicId) {
+                try {
+                    await deleteImageFromCloudinary(oldImagePublicId);
+                } catch (error) {
+                    console.error("Error deleting old image from Cloudinary:", error);
+                }
             }
 
+            // Upload new image to Cloudinary
             const imgUrl = await uploadImage(req.file.path);
-            banner.bannerImage = imgUrl;
+            const { image, public_id } = imgUrl;
+            banner.bannerImage = { url: image, public_id };
 
             try {
                 fs.unlinkSync(req.file.path);

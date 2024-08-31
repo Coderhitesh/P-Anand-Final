@@ -6,6 +6,18 @@ cloudinary.config({
     cloud_name: "dohzhn0ny"
 });
 
+const uploadPDF = async (file) => {
+    try {
+        const pdf = await cloudinary.uploader.upload(file,{
+            folder:'artists'
+        })
+        return {pdf: pdf.secure_url, public_id: pdf.public_id}
+    } catch (error) {
+        console.error(error)
+        throw new Error('Failed to upload PDF');
+    }
+}
+
 const uploadImage = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file, {
@@ -14,7 +26,7 @@ const uploadImage = async (file) => {
         return { image: result.secure_url, public_id: result.public_id };
     } catch (error) {
         console.error(error);
-        throw new Error('Failed to upload video');
+        throw new Error('Failed to upload Image');
     }
 };
 
@@ -41,6 +53,16 @@ const deleteImageFromCloudinary = async (public_id) => {
     }
 };
 
+const deletePdfFromCloudinary = async (public_id) => {
+    try {
+        await cloudinary.uploader.destroy(public_id);
+        console.log('Image Deleted')
+    } catch (error) {
+        console.error('Error in deleting PDF from Cloudinary',error)
+        throw new Error('Failed to delete Pdf fron the Cloudinary')
+    }
+}
+
 module.exports = {
-    uploadImage, uploadVideo, deleteImageFromCloudinary
+    uploadImage, uploadVideo, deleteImageFromCloudinary, uploadPDF, deletePdfFromCloudinary
 };

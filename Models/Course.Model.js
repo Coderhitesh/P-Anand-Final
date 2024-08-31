@@ -1,5 +1,14 @@
 const mongoose = require('mongoose')
 
+const courseModeSchema = new mongoose.Schema({
+    
+    modeType: { type: String, required: true },
+    coursePrice: { type: Number, required: true },
+    coursePriceAfterDiscount: { type: Number, required: true },
+    courseDiscountPercent: { type: Number, required: true },
+    courseLink:{type:String}
+});
+
 const courseSchema = new mongoose.Schema({
     courseName: {
         type: String,
@@ -7,18 +16,6 @@ const courseSchema = new mongoose.Schema({
     },
     courseDescription: {
         type: String,
-        required: true
-    },
-    coursePrice: {
-        type: Number,
-        required: true
-    },
-    coursePriceAfterDiscount: {
-        type: Number,
-        required: true
-    },
-    courseDiscountPercent: {
-        type: Number,
         required: true
     },
     courseImage: {
@@ -38,11 +35,28 @@ const courseSchema = new mongoose.Schema({
     courseSubCategory: {
         type: String,
     },
-    courseBundleName: {
-        type: String
-    },
     courseTagName: {
         type: String
+    },
+    courseRating:{
+        type:Number
+    },
+    courseCountRating:{
+        type:Number
+    },
+    courseTeacherName: {
+        type: String,
+    },
+    courseMode: [courseModeSchema],
+    feature: {
+        type: Boolean,
+        default: false
+    },
+    startingPrice:{
+        type:Number
+    },
+    endingPrice:{
+        type:Number
     }
 })
 
