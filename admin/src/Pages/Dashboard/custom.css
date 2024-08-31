@@ -1,7 +1,0 @@
-.bar .card-body canvas{
-    max-height: 500px !important;
-}
-.relative{
-    position: relative;
-    z-index:-9999;
-}
