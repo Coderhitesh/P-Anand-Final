@@ -13,7 +13,7 @@ exports.createTeacher = async (req, res) => {
         if (!teacherEmail) emptyField.push('Teacher Email')
         if (!teacherQualification) emptyField.push('Teacher Qualification')
         if (!teacherExperience) emptyField.push('Teacher Experience')
-        if (!teacherAbout) emptyField.push('Teacher About')
+        // if (!teacherAbout) emptyField.push('Teacher About')
         if (!teacherExpertise) emptyField.push('Teacher Expertise')
         if (emptyField.length > 0) {
             return res.status(400).json({ message: `Please fill in the following fields: ${emptyField}` })

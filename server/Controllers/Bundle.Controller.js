@@ -4,6 +4,7 @@ const fs = require("fs")
 
 exports.createBundle = async (req, res) => {
     try {
+        console.log(req.body)
         const {
             bundleName,
             bundleStartingPrice,
@@ -16,12 +17,12 @@ exports.createBundle = async (req, res) => {
             feature
         } = req.body;
 
-
+        
 
         // Parse the bundleMode field if it's passed as a string (e.g., from a form)
         const mode = JSON.parse(bundleMode);
         const bundleCourseIds = JSON.parse(bundleCourseId)
-        console.log(mode)
+        // console.log(mode)
 
 
         const emptyField = [];

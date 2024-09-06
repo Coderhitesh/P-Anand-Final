@@ -48,10 +48,12 @@ const BookSchema = new mongoose.Schema({
         type: String
     },
     bookRating: {
-        type: Number
+        type: Number,
+        default:0
     },
     bookCountRating: {
-        type: Number
+        type: Number,
+        default:0
     },
     bookPdf: {
         url:{

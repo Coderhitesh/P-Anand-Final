@@ -4,10 +4,12 @@ const SendEmail = require('../utils/SendEmail');
 const Orders = require('../Models/OrderModel')
 exports.register = async (req, res) => {
     try {
+        console.log("I am hit")
         const { FullName, Email, ContactNumber, Password } = req.body;
 
         // Check if all required fields are provided
         if (!FullName || !Email || !ContactNumber || !Password) {
+            console.log("i am error")
             return res.status(403).json({
                 success: false,
                 msg: 'Please Fill All Required Fields'

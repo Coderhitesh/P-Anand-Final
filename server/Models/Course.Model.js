@@ -4,10 +4,12 @@ const courseModeSchema = new mongoose.Schema({
     
     modeType: { type: String, required: true },
     coursePrice: { type: Number, required: true },
-    coursePriceAfterDiscount: { type: Number },
-    courseDiscountPercent: { type: Number },
-    courseLink:{type:String}
-});
+    modeId:{type:mongoose.Schema.Types.ObjectId,ref:"CourseMode"},
+    coursePriceAfterDiscount: { type: Number, required: true },
+    courseDiscountPercent: { type: Number, required: true },
+    courseLink:{type:String},
+   
+}, { _id: false });
 
 const courseSchema = new mongoose.Schema({
     courseName: {

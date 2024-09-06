@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         }
         cb(null, uploadDir); 
       });
-    } else {
+    } else {  
       cb(null, uploadDir); 
     }
   },

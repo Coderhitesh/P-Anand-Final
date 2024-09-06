@@ -132,8 +132,8 @@ exports.updateBookCategory = async (req, res) => {
     try {
         const { _id } = req.params;
         const { categoryName, subcategoryName } = req.body;
-       const spiltSubcategoryName  = subcategoryName.split(',')
-        
+        console.log(req.body)
+
         let category = await mainBookCategory.findById(_id);
         if (!category) {
             return res.status(404).json({
@@ -144,7 +144,7 @@ exports.updateBookCategory = async (req, res) => {
 
         // Update the category name and subcategory name if provided
         if (categoryName) category.categoryName = categoryName;
-        if (subcategoryName) category.subcategoryName = spiltSubcategoryName;
+        if (subcategoryName) category.subcategoryName = subcategoryName;
 
         // Handle image update
         if (req.file) {

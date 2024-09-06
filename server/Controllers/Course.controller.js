@@ -166,8 +166,6 @@ exports.updateCourse = async (req, res) => {
             feature
         } = req.body
 
-        // console.log("Upcoming data",JSON.parse(req.body.courseMode))
-
         const data = await MainCourse.findById(id)
         if (!data) {
             return res.status(400).json({

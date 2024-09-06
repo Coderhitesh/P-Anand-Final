@@ -270,4 +270,30 @@ exports.updateBookFeature = async (req,res) => {
             message: 'Internal server error',
         })
     }
-} 
+}
+
+exports.getBookByCategory = async (req, res) => {
+    const { categoryId } = req.params;
+
+    try {
+        const books = await BookSchema.find({ bookCategory: categoryId });
+
+        if (books.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No books found for this category.'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: books
+        });
+    } catch (error) {
+        console.error('Error fetching books by category:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error. Unable to fetch courses.'
+        });
+    }
+};
