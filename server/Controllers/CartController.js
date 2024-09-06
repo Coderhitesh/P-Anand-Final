@@ -262,3 +262,40 @@ exports.GetAllByUserIdProductCart = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
+
+exports.deleteBySessionId = async (req, res) => {
+    try {
+      const { session } = req.body;
+  console.log(session)
+      if (!session) {
+        return res.status(400).json({
+          success: false,
+          message: 'Session ID is required',
+        });
+      }
+  
+      const deletedCart = await Cart.findOneAndDelete({ sessionId:session });
+  
+      if (!deletedCart) {
+        return res.status(404).json({
+          success: false,
+          message: 'No cart items found for the given session ID',
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'Cart items deleted successfully',
+        deletedCart,
+      });
+    } catch (error) {
+      // Handle any errors during the process
+      res.status(500).json({
+        success: false,
+        message: 'An error occurred while deleting cart items',
+        error: error.message,
+      });
+    }
+  };
+  

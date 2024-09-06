@@ -23,7 +23,7 @@ function CourseDetail({ handleAddToCart, loadingFromCart }) {
     const navigate = useNavigate()
     const handleFetchCourse = async () => {
         try {
-            const res = await axios.get(`http://localhost:9000/api/v1/single-course/${id}`);
+            const res = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/single-course/${id}`);
             setCourse(res.data.data);
             if (res.data.data.courseMode.length > 0) {
                 setSelectedMode(res.data.data.courseMode[0]._id);
@@ -37,7 +37,7 @@ function CourseDetail({ handleAddToCart, loadingFromCart }) {
 
     const handleFetchTeacher = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/get-all-teacher');
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-teacher');
             setTeacher(res.data.data);
         } catch (error) {
             console.log(error);
@@ -46,7 +46,7 @@ function CourseDetail({ handleAddToCart, loadingFromCart }) {
 
     const handleFetchAllCourse = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/get-all-course');
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-course');
             if (course) {
                 const category = course.courseCategory;
                 const allData = res.data.data;
@@ -60,7 +60,7 @@ function CourseDetail({ handleAddToCart, loadingFromCart }) {
 
     const handleFetchCategory = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/get-all-category');
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-category');
             setCategory(res.data.data);
         } catch (error) {
             console.log(error);

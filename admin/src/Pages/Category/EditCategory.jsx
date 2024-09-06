@@ -46,7 +46,7 @@ const EditCategory = () => {
 
     const handleFetch = async () => {
         try {
-            const res = await axios.get(`http://localhost:9000/api/v1/single-category/${id}`);
+            const res = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/single-category/${id}`);
             const category = res.data.data;
             if (category) {
                 setData({
@@ -81,7 +81,7 @@ const EditCategory = () => {
     
     const updateCategory = async (data) => {
         try {
-            const response = await axios.put(`http://localhost:9000/api/v1/update-category/${id}`, data, {
+            const response = await axios.put(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/update-category/${id}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

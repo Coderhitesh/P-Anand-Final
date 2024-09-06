@@ -30,7 +30,7 @@ const EditBundle = () => {
     // Fetch the bundle data
     const fetchBundleData = async () => {
       try {
-        const res = await axios.get(`http://localhost:9000/api/v1/single-bundle/${id}`);
+        const res = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/single-bundle/${id}`);
         const bundle = res.data.data;
         setFormData({
           ...formData,
@@ -59,9 +59,9 @@ const EditBundle = () => {
     const fetchData = async () => {
       try {
         const [tagsResponse, categoriesResponse, coursesResponse] = await Promise.all([
-          axios.get('http://localhost:9000/api/v1/get-all-tag'),
-          axios.get('http://localhost:9000/api/v1/get-all-category'),
-          axios.get('http://localhost:9000/api/v1/get-all-course')
+          axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-tag'),
+          axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-category'),
+          axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-course')
         ]);
 
         setAllTag(tagsResponse.data.data);
@@ -175,7 +175,7 @@ const EditBundle = () => {
     });
 
     try {
-      await axios.put(`http://localhost:9000/api/v1/update-bundle/${id}`, data, {
+      await axios.put(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/update-bundle/${id}`, data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

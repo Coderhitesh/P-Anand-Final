@@ -17,7 +17,7 @@ const { createBookCategory, getAllBookCategory, singleBookCategory, deleteBookCa
 const { createBookTag, getAllBookTags, getSingleBookTag, deleteBookTag, updateBookTag } = require('../Controllers/BookTag.controller')
 const { createBookRating, getAllBookRating, singleBookRating, updateBookRating, deleteBookRating } = require('../Controllers/BookRating.controller')
 const { createBookBundle, getBookBundle, getSingleBookBundle, updateBookBundle, deleteBookBundle } = require('../Controllers/BookBundle.controller')
-const { AddProductIncart, increaseQuantity, removeProductFromCart, GetAllProductCart, GetAllBySessionIdProductCart, GetAllByUserIdProductCart, decreaseQuantity } = require('../Controllers/CartController')
+const { AddProductIncart, increaseQuantity, removeProductFromCart, GetAllProductCart, GetAllBySessionIdProductCart, GetAllByUserIdProductCart, decreaseQuantity, deleteBySessionId } = require('../Controllers/CartController')
 const { CreateCheckOut, FindMode, MakeOrder, MyOrderOfPenDrive, OrderStatusById, ShowMyCourse, BookOrder } = require('../Controllers/Ordercontroller')
 const { createCourseMode, getCourseMode, getSingleCourseMode, deleteCourseMode, updateCourseMode } = require('../Controllers/CourseMode.controller')
 const router = express.Router()
@@ -165,6 +165,7 @@ router.delete('/delete-book-bundle/:_id', deleteBookBundle)
 router.post('/add-to-cart', AddProductIncart);
 router.put('/update-quantity-increase', increaseQuantity);
 router.put('/update-quantity-decrease', decreaseQuantity);
+router.post('/delete-by-session', deleteBySessionId);
 
 router.post('/remove-product', removeProductFromCart);
 router.get('/get-all-products', GetAllProductCart);

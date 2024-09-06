@@ -16,11 +16,13 @@ function Cart() {
     useEffect(() => {
         setUserToken(token)
     }, [token])
+
+    console.log(session)
     const [totalPrice, setTotalPrice] = useState(0);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:9000/api/v1/get-products-by-session/${session}`);
+            const response = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-products-by-session/${session}`);
             console.log(response.data.cart);
             if (response.data) {
                 setCartItems(response.data.cart);
@@ -44,7 +46,7 @@ function Cart() {
     const removeProduct = async (productId) => {
 
         try {
-            const response = await axios.post(`http://localhost:9000/api/v1/remove-product`, {
+            const response = await axios.post(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/remove-product`, {
                 productId,
                 sessionId: session
             });
@@ -63,12 +65,22 @@ function Cart() {
         }
     };
 
+    const deleteAll = async()=>{
+        // console.log(session)
+        try {
+            const res  = await axios.post('http://localhost:9000/api/v1/delete-by-session',{session})
+            console.log(res.data)
+        } catch (error) {
+            
+        }
+    }
+
     const calculateTotalPrice = (cartItems) => {
         const total = cartItems.reduce((sum, item) => sum + 1 * item.productPrice, 0);
         setTotalPrice(total);
     };
 
-
+    // deleteAll()
 
 
     const clickToCheckout = async () => {
@@ -89,11 +101,12 @@ function Cart() {
                 };
     
                 try {
-                    const response = await axios.post('http://localhost:9000/api/v1/Make-Order', cartData, {
+                    const response = await axios.post('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/Make-Order', cartData, {
                         headers: {
                             Authorization: `Bearer ${userToken}`
                         }
                     });
+                    deleteAll()
                     window.location.href="/Order-Confirmed"
                     // Handle success (e.g., navigate to a success page, display a message, etc.)
                     console.log('Order successfully placed:', response.data);
@@ -109,12 +122,13 @@ function Cart() {
                 };
     
                 try {
-                    const response = await axios.post('http://localhost:9000/api/v1/Make-Order', cartData, {
+                    const response = await axios.post('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/Make-Order', cartData, {
                         headers: {
                             Authorization: `Bearer ${userToken}`
                         }
                     });
                     window.location.href="/Order-Confirmed"
+                    deleteAll()
 
                     // Handle success (e.g., navigate to a success page, display a message, etc.)
                     console.log('Order successfully placed:', response.data);
@@ -135,7 +149,7 @@ function Cart() {
         toast.info("Coupon code applied successfully");
     };
 
-    console.log("Cart", cartItems)
+    // console.log("Cart", cartItems)
 
     useEffect(() => {
         fetchData();

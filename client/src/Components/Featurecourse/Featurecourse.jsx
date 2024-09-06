@@ -15,7 +15,7 @@ function Featurecourse() {
 
   const handleFetchCourse = async () => {
     try {
-      const res = await axios.get('http://localhost:9000/api/v1/get-all-course');
+      const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-course');
       const allData = res.data.data;
       const filterdata = allData.filter((item) => item.feature === true);
       setCourse(filterdata);
@@ -26,7 +26,7 @@ function Featurecourse() {
 
   const handleFetchTeacher = async () => {
     try {
-      const res = await axios.get('http://localhost:9000/api/v1/get-all-teacher');
+      const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-teacher');
       setTeacher(res.data.data);
     } catch (error) {
       console.log(error);
@@ -35,7 +35,7 @@ function Featurecourse() {
 
   const handleFetchTag = async () => {
     try {
-      const res = await axios.get('http://localhost:9000/api/v1/get-all-tag');
+      const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-tag');
       setTag(res.data.data);
     } catch (error) {
       console.log(error);
@@ -44,7 +44,7 @@ function Featurecourse() {
 
   const handleFetchCategory = async () => {
     try {
-      const res = await axios.get('http://localhost:9000/api/v1/get-all-category');
+      const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-category');
       setCategory(res.data.data);
     } catch (error) {
       console.log(error);

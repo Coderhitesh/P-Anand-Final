@@ -57,7 +57,7 @@ const AddCategory = () => {
         });
     
         try {
-            await axios.post('http://localhost:9000/api/v1/create-category', data, {
+            await axios.post('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/create-category', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

@@ -14,7 +14,7 @@ const UserProfile = () => {
     // Fetch user profile data
     const handleFetchUserProfile = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/user-details', {
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/user-details', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             //   console.log(res.data.orders)
@@ -27,7 +27,7 @@ const UserProfile = () => {
     // Fetch active course data
     const handleFetchCourseData = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/show-course', {
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/show-course', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCourses(res.data.data); // Update courses state
@@ -39,7 +39,7 @@ const UserProfile = () => {
     // Fetch order data
       const handleFetchOrderData = async () => {
         try {
-          const res = await axios.get('http://localhost:9000/api/v1/book-order', {
+          const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/book-order', {
             headers: { Authorization: `Bearer ${token}` }
           });
           console.log(res.data.data)
@@ -52,7 +52,8 @@ const UserProfile = () => {
     // Logout function
     const handleLogout = () => {
         sessionStorage.clear(); // Clear session storage
-        navigate('/login'); // Redirect to login page
+        // navigate('/login'); // Redirect to login page
+        window.location.href='/'
     };
 
     useEffect(() => {

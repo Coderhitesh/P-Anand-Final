@@ -12,7 +12,7 @@ function StudyMaterial() {
 
     const handleFetchCategory = async () => {
         try {
-            const res = await axios.get(`http://localhost:9000/api/v1/single-category/${id}`);
+            const res = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/single-category/${id}`);
             console.log(res.data.data);
             setCategory(res.data.data);
         } catch (error) {
@@ -22,7 +22,7 @@ function StudyMaterial() {
 
     const handleFetchCourse = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/get-all-course');
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-course');
             const allCourse = res.data.data;
             const filterData = allCourse.filter((item) => item.courseCategory === id);
             setFilterCourse(filterData);

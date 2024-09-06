@@ -12,7 +12,7 @@ function BundlePage() {
 
     const handleFetchCategory = async () => {
         try {
-            const res = await axios.get(`http://localhost:9000/api/v1/get-all-category`);
+            const res = await axios.get(`https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-category`);
             console.log(res.data.data);
             setCategory(res.data.data);
         } catch (error) {
@@ -22,7 +22,7 @@ function BundlePage() {
 
     const handleFetchBundle = async () => {
         try {
-            const res = await axios.get('http://localhost:9000/api/v1/get-all-bundles');
+            const res = await axios.get('https://www.api.panandacademy.hoverbusinessservices.com/api/v1/get-all-bundles');
             setBundle(res.data.data)
         } catch (error) {
             console.log(error);
